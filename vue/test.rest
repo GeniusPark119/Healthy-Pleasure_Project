@@ -1,0 +1,6 @@
+GET http://localhost:8058/mypageapi/3
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMyJ9._8fdTWqqH-_dio_Vnm8OkPRuvEksgcYv-l5jlkt7HII
+###
+GET http://localhost:8058/mypageapi/3?userSeq=3
+access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMyJ9._8fdTWqqH-_dio_Vnm8OkPRuvEksgcYv-l5jlkt7HII
+

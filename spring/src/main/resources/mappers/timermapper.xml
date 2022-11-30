@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="com.ssafit.pjt.model.dao.TimerDao">
+	
+	<insert id="insertTime" parameterType="Timer" keyProperty="timeSeq" useGeneratedKeys="true">
+	INSERT INTO timer
+	VALUES(#{timeSeq}, #{time}, #{userSeq}, #{regDate})
+	</insert>
+	
+	<select id="selectAllTimer" parameterType="int" resultType="Map">
+        SELECT regDate, MAX(time) as time
+        FROM timer
+        WHERE userSeq = #{userSeq}
+        GROUP BY regDate
+        ORDER BY regDate DESC
+        LIMIT 5
+	</select>
+	
+	<select id="selectUrl" resultType="String">
+	SELECT videoUrl
+	FROM video
+	ORDER BY rand()
+	LIMIT 1;
+	</select>
+	
+	</mapper>

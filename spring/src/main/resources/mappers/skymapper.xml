@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafit.pjt.model.dao.SkyDao">
+
+<insert id="insertSky" parameterType="Sky" keyProperty="skySeq" useGeneratedKeys="true">
+        INSERT INTO skyboard(title, content, imgName, imgUri, regDate, userSeq, yearMonth)
+        VALUES(#{title}, #{content}, #{imgName}, #{imgUri}, #{regDate}, #{userSeq}, #{yearMonth})
+</insert>
+
+	<select id="selectSky" parameterType="int" resultType="Sky">
+		SELECT *
+		FROM skyboard
+		WHERE skySeq = #{skySeq}
+	</select>
+
+	<select id="selectAllSky" parameterType="int" resultType="Sky">
+		SELECT *
+		FROM skyboard
+		WHERE userSeq = #{userSeq}
+	</select>
+
+	<update id="updateSky" parameterType="Sky">
+		UPDATE skyboard
+		SET title = #{title},
+		content = #{content},
+		imgName = #{imgName},
+		imgUri = #{imgUri}
+		WHERE skySeq = #{skySeq}
+	</update>
+	
+	<delete id="deleteSky" parameterType="int">
+	DELETE FROM skyboard
+	WHERE skySeq = #{skySeq}
+	</delete>
+
+	<select id="selectfile" parameterType="String" resultType="Map">
+		SELECT imgName, imgUri FROM skyboard
+		WHERE imgName=#{imgName}
+			
+	</select>
+</mapper>

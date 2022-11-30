@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafit.pjt.model.dao.MypageDao">
+	<select id="selectCnt" parameterType="Board" resultType="int">
+        select
+        count(*)
+        from (select regDate as reg1
+        from walkboard
+        where userSeq = #{userSeq} AND regDate = #{regDate}
+        group by regDate
+
+        union all
+
+        select regDate as reg2
+        from
+        skyboard
+        where userSeq = #{userSeq} AND regDate = #{regDate}
+        group by regDate
+
+        union all
+
+        select regDate as reg3
+        from mealboard 
+        where userSeq = #{userSeq} AND regDate = #{regDate}
+        group by regDate
+        ) cnt;
+    </select>
+
+<select id="selectAllCnt" parameterType="int" resultType="int">
+    SELECT FLOOR((COUNT(*)/90)*100)
+    FROM (
+
+    SELECT regDate, yearMonth
+    FROM walkboard
+    WHERE userSeq = #{userSeq}
+    GROUP BY regDate
+
+
+    UNION ALL
+
+    SELECT regDate, yearMonth
+    FROM skyboard
+    WHERE userSeq = #{userSeq}
+    GROUP BY regDate
+
+
+    union all
+
+    SELECT regDate, yearMonth
+    FROM mealboard
+    WHERE userSeq = #{userSeq}
+    GROUP BY regDate
+
+
+    ) us
+    WHERE yearMonth = date_format(now(), '%Y-%m');
+</select>
+
+	<!-- 별자리 -->
+	<select id="selectStr" parameterType="int" resultType="String">
+		SELECT luckMsg
+		FROM starluck
+		ORDER BY rand(DATE_FORMAT(now(), '%Y%m%d')+#{StarId})
+		LIMIT 1;
+	</select>
+	
+		<select id="selectStar" parameterType="int" resultType="String">
+		SELECT starName
+		FROM star
+		WHERE starId = #{starId}
+	</select>
+
+	<!-- mbti -->
+	<select id="selectMbti" parameterType="String"
+		resultType="String">
+		SELECT articleUrl
+		FROM articletable
+		WHERE mbti = #{mbti}
+	</select>
+	
+	<!-- 기부하면 다 날려 -->
+	<delete id="deleteSkyBoard" parameterType="int">
+	DELETE FROM skyboard
+	WHERE userSeq = #{userSeq}
+	</delete>
+	
+	<insert id="insertContributor" parameterType="Contributor" keyProperty="contributorSeq" useGeneratedKeys="true">
+    INSERT INTO contributor(userSeq, yearMonth)
+    VALUES (#{userSeq}, #{yearMonth})
+    </insert>
+
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafit.pjt.model.dao.WalkDao">
+
+	<insert id="insertWalk" parameterType="Walk" keyProperty="userSeq" useGeneratedKeys="true">
+
+		INSERT INTO walkboard
+		VALUES(#{walkSeq}, #{title}, #{content}, #{imgName}, #{imgUri}, #{regDate}, #{userSeq})
+
+	</insert>
+	
+	<select id="selectWalk" parameterType="int" resultType="Walk">
+		SELECT *
+		FROM walkboard
+		WHERE walkSeq = #{walkSeq}
+	</select>
+	
+	<select id="selectWalkAll" parameterType="int" resultType="Walk">
+		SELECT *
+		FROM walkboard
+		WHERE userSeq = #{userSeq}
+	</select>
+	
+	<update id="updateWalk" parameterType="Walk">
+		UPDATE walkboard
+		SET title = #{title},
+		content = #{content},
+		imgName = #{imgName},
+		imgUri = #{imgUri}
+		WHERE walkSeq = #{walkSeq}
+	</update>
+	
+	<delete id="deleteWalk" parameterType="int">
+		DELETE FROM walkboard
+		WHERE walkSeq = #{walkSeq}
+	</delete>
+
+</mapper>

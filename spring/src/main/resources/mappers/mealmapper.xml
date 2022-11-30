@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafit.pjt.model.dao.MealDao">
+
+	<insert id="insertMeal" parameterType="Meal"
+		keyProperty="userSeq" useGeneratedKeys="true">
+		INSERT INTO mealboard
+		VALUES(#{mealSeq}, #{title}, #{content}, #{imgName}, #{imgUri}, #{regDate}, #{userSeq})
+	</insert>
+
+	<select id="selectMeal" parameterType="int" resultType="Meal">
+		SELECT *
+		FROM mealboard
+		WHERE mealSeq = #{mealSeq}
+	</select>
+
+	<select id="selectMealAll" parameterType="int" resultType="Meal">
+		SELECT *
+		FROM mealboard
+		WHERE userSeq = #{userSeq}
+	</select>
+
+	<update id="updateMeal" parameterType="Meal">
+		UPDATE mealboard
+		SET title = #{title},
+		content = #{content},
+		imgName = #{imgName},
+		imgUri = #{imgUri}
+		WHERE mealSeq = #{mealSeq}
+	</update>
+	
+	<delete id="deleteMeal" parameterType="int">
+		DELETE FROM mealboard
+		WHERE mealSeq = #{mealSeq}
+	</delete>
+
+</mapper>
